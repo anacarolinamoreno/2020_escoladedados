@@ -24,11 +24,11 @@ Para entender o código, pense que você está escrevendo uma frase em uma nova 
 Uma das tarefas é aprender a ordem em que os elementos da frase devem ser usados, como verbos, substantivos e até a vírgula.
 */
 
--- Frase 1: "Selecionar tudo da tabela ideb"
+-- Frase 1: "Selecionar tudo da tabela ideb2017"
 
 -- Tradução para o SQL:
 
-SELECT * FROM ideb
+SELECT * FROM ideb2017
 
 /* 
 SELECT: Comando para selecionar alguma coisa de algum lugar.
@@ -36,7 +36,7 @@ O asterisco * é "a coisa". No caso, ele seleciona todas as colunas (ou variáve
 FROM: É o comando que vai indicar o lugar de onde você quer selecionar o seu dado. Nesse caso, é a nossa tabela.
 */
 
--- Frase 2: "Selecionar só as colunas da UF de residência e da cor/raça dos candidatos da tabela ideb"
+-- Frase 2: "Selecionar só as colunas da UF de residência e da cor/raça dos candidatos da tabela ideb2017"
 
 -- Nesse caso, é preciso saber o nome delas, e listá-las depois do comando, separadas por vírgula.
 
@@ -44,7 +44,7 @@ FROM: É o comando que vai indicar o lugar de onde você quer selecionar o seu d
 
 -- Tradução para o SQL:
 
-SELECT nome_munic, uf FROM ideb
+SELECT nome_munic, uf FROM ideb2017
 
 -- Note que a ordem da sua frase influencia a ordem das colunas na sua tabela nova.
 
@@ -52,7 +52,7 @@ SELECT nome_munic, uf FROM ideb
 
 SELECT nome_munic ,
  uf     FROM 
- ideb
+ ideb2017
  
  /*
 Note que, se você digitou tudo direitinho, cada elemento aparece com uma cor diferente:
@@ -66,17 +66,17 @@ VERMELHO: valores
 
 -- O comando SELECT DISTINCT serve para selecionar apenas os valores únicos de uma coluna, sem todas as linhas repetidas.
 
--- Frase 3: "Selecionar só os valores únicos que aparecem na coluna do estado da tabela ideb"
+-- Frase 3: "Selecionar só os valores únicos que aparecem na coluna do estado da tabela ideb2017"
 
 -- Tradução para o SQL:
 
-SELECT DISTINCT uf FROM ideb
+SELECT DISTINCT uf FROM ideb2017
 
 -- Se selecionarmos uma segunda coluna, o número de linhas será o número de valores possíveis da coluna com mais valores únicos.
 
 -- IMPORTANTE: sempre separar as colunas selecionadas entre vírgulas:
 
-SELECT DISTINCT uf, nome_munic FROM ideb
+SELECT DISTINCT uf, nome_munic FROM ideb2017
 
 
  /* ### CASE ... WHEN ... THEN ... ELSE ... END ### */
@@ -87,7 +87,7 @@ o comando "CASE-WHEN" serve para substituir os valores codificados por termos ma
 */
 
 /* 
-Frase 4: "Selecionar os valores únicos da coluna estado na tabela ideb, mas, 
+Frase 4: "Selecionar os valores únicos da coluna estado na tabela ideb2017, mas, 
 CASO o valor seja RO, ENTÃO substitua-o por 'Rondônia';
 NOS OUTROS CASOS, substitua os valores por 'não é Rondônia';
 e É SÓ ISSO."
@@ -98,7 +98,7 @@ SELECT
 		WHEN uf = 'RO' THEN 'Rondônia'
 		ELSE 'não é Rondônia'
 	END 
-FROM ideb
+FROM ideb2017
 
 -- O END serve para indicar o fim da minha lista de condições.
 
@@ -109,7 +109,7 @@ SELECT  DISTINCT
 		WHEN uf = 'RO' THEN 'Rondônia'
 		ELSE 'não é Rondônia'
 	END 
-FROM ideb
+FROM ideb2017
 
 -- Note que o nome da coluna não é mais "uf". Mas existe um comando simples pra renomear essa e qualquer outra coluna:
 
@@ -128,7 +128,7 @@ SELECT  DISTINCT
 		WHEN uf = 'RO' THEN 'Rondônia'
 		ELSE 'não é Rondônia'
 	END AS Estado,
-FROM ideb
+FROM ideb2017
 
 -- Mas podemos nomear mais colunas se quisermos, só é preciso lembrar de separá-las pela vírgula:
 
@@ -138,5 +138,27 @@ SELECT  DISTINCT
 		ELSE 'não é Rondônia'
 	END AS Estado,
 	nome_munic AS Município
-FROM ideb
+FROM ideb2017
 
+
+/* ### WHERE ### */
+
+/*
+Os comandos acima servem para estabelecer condições de:
+- seleção de colunas (as variáveis da tabela);
+- tratamento dos nomes das colunas ou valores contidos nelas.
+
+A seguir, veremos como funciona o WHERE, um comando importante para FILTRAR de quais linhas estamos falando.
+Para isso, vamos agora mexer um pouco na tabela do enem2019.
+*/ 
+
+-- Frase 5: "Selecionar as colunas de estado, idade e sexo, mas apenas os dados de candidatos e candidatas do estado do Ceará na tabela enem2019."
+
+-- Tradução para o SQL:
+
+SELECT
+	SG_UF_NASCIMENTO,
+	NU_IDADE,
+	TP_SEXO
+FROM enem2019
+WHERE SG_UF_NASCIMENTO = 'RJ'
