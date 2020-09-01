@@ -72,7 +72,9 @@ VERMELHO: valores
 
 SELECT DISTINCT uf FROM ideb
 
--- Se incluir mais uma coluna, o número de linhas será o número de valores possíveis da coluna com mais valores únicos:
+-- Se selecionarmos uma segunda coluna, o número de linhas será o número de valores possíveis da coluna com mais valores únicos.
+
+-- IMPORTANTE: sempre separar as colunas selecionadas entre vírgulas:
 
 SELECT DISTINCT uf, nome_munic FROM ideb
 
@@ -87,7 +89,8 @@ o comando "CASE-WHEN" serve para substituir os valores codificados por termos ma
 /* 
 Frase 4: "Selecionar os valores únicos da coluna estado na tabela ideb, mas, 
 CASO o valor seja RO, ENTÃO substitua-o por 'Rondônia';
-NOS OUTROS CASOS, substitua os valores por 'não é Rondônia'."
+NOS OUTROS CASOS, substitua os valores por 'não é Rondônia';
+e É SÓ ISSO."
 */
 
 SELECT  
@@ -96,6 +99,8 @@ SELECT
 		ELSE 'não é Rondônia'
 	END 
 FROM ideb
+
+-- O END serve para indicar o fim da minha lista de condições.
 
 -- Se eu quiser só os valores únicos, é só adicionar o "DISTINCT" (sempre imediatamente após o "SELECT" e sempre sem vírgula):
 
@@ -106,4 +111,32 @@ SELECT  DISTINCT
 	END 
 FROM ideb
 
--- Note que o nome da coluna não é mais "uf"
+-- Note que o nome da coluna não é mais "uf". Mas existe um comando simples pra renomear essa e qualquer outra coluna:
+
+ /* ### AS (o "alias") ### */
+ 
+/*
+"Alias" em inglês é um termo que indica uma forma mais usual de se referir à mesma pessoa.
+Assim como o "CASE-WHEN", ele serve como limpeza da base, para facilitar a análise.
+No SQL, o comando a ser usado é o AS.
+Ele vai no fim de uma coluna na sua lista de seleções.
+No nosso caso, a única coluna selecionada termina no END, portanto colocamos o AS depois disso:
+*/
+
+SELECT  DISTINCT
+	CASE
+		WHEN uf = 'RO' THEN 'Rondônia'
+		ELSE 'não é Rondônia'
+	END AS Estado,
+FROM ideb
+
+-- Mas podemos nomear mais colunas se quisermos, só é preciso lembrar de separá-las pela vírgula:
+
+SELECT  DISTINCT
+	CASE
+		WHEN uf = 'RO' THEN 'Rondônia'
+		ELSE 'não é Rondônia'
+	END AS Estado,
+	nome_munic AS Município
+FROM ideb
+
